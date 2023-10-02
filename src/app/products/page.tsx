@@ -7,9 +7,10 @@ import { products } from "@/data/products";
 export default function Products() {
   return (
     <div className="bg-background flex">
-      <Sidebar />
+      <Sidebar/>
       {products.map((products) => (
         <ProductCard
+          id={products.id}
           name={products.name}
           img={products.img}
           desc={products.desc}

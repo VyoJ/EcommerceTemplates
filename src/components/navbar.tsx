@@ -4,6 +4,7 @@ import * as React from "react";
 import Link from "next/link";
 import { Menu, Search } from "lucide-react";
 import { ModeToggle } from "./themeToggle";
+import { Button } from "./ui/button";
 
 export default function Navbar() {
   const [state, setState] = React.useState(false);
@@ -16,7 +17,7 @@ export default function Navbar() {
   ];
 
   return (
-    <nav className="w-full border-b md:border-0">
+    <nav className="w-full border-b shadow mb-4">
       <div className="items-center px-4 max-w-screen-xl mx-auto md:flex md:px-8">
         <div className="flex items-center justify-between py-3 md:py-5 md:block">
           <Link href="/">
@@ -51,7 +52,9 @@ export default function Navbar() {
               </li>
             ))}
             <li>
-              <Link href="/"></Link>
+              <Link href="/signin">
+                <Button>Log In</Button>
+              </Link>
             </li>
             <ModeToggle/>
           </ul>
