@@ -32,11 +32,11 @@ function ProductCard({
   specs,
 }: ProductProps) {
   return (
-    <Card className="p-4 border m-auto border-gray-300 rounded-md shadow-md w-1/4 h-1/3">
+    <Card className="border m-auto mb-6 border-gray-300 rounded-md shadow-md lg:p-4 lg:mb-0 lg:mx-4">
       <CardHeader className="items-start gap-4 space-y-0">
         <div className="space-y-1 mx-auto">
           <CardTitle>
-            <Link href="/products/${id}">{name}</Link>
+            <Link href={`/products/${id}`}>{name}</Link>
           </CardTitle>
         </div>
         <div className="w-[250px] h-[250px] mx-auto">
@@ -51,6 +51,9 @@ function ProductCard({
       </CardHeader>
       <CardContent>₹ {price}</CardContent>
       <CardContent>{desc}</CardContent>
+      <CardContent>
+
+      </CardContent>
       {/* <CardContent>
         <div className="flex items-center space-x-1 rounded-md bg-secondary text-secondary-foreground">
           <Button variant="secondary" className="px-3 shadow-none">
