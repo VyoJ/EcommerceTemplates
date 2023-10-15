@@ -1,5 +1,5 @@
 export interface Product {
-    id: number
+    prodid: number
     name: string
     img: string
     desc: string
@@ -10,7 +10,7 @@ export interface Product {
   
 export const products: Product[] = [
     {
-        id: 1,
+        prodid: 1,
         name : "Smart Watch",
         img : "https://upload.wikimedia.org/wikipedia/commons/thumb/a/af/Close_Up_of_Apple_Watch_8.jpg/640px-Close_Up_of_Apple_Watch_8.jpg",
         desc : "Lorem Ipsum Dolor Sit Amet",
@@ -19,7 +19,7 @@ export const products: Product[] = [
         specs : "Lorem Ipsum",
     },
     {
-        id: 2,
+        prodid: 2,
         name : "Laptop",
         img : "https://upload.wikimedia.org/wikipedia/commons/thumb/3/37/Schenker_VIA14_Laptop_asv2021-01.jpg/640px-Schenker_VIA14_Laptop_asv2021-01.jpg",
         desc : "Lorem Ipsum Dolor Sit Amet",
@@ -28,7 +28,7 @@ export const products: Product[] = [
         specs : "Lorem Ipsum",
     },
     {
-        id: 3,
+        prodid: 3,
         name : "Headphones",
         img : "https://upload.wikimedia.org/wikipedia/commons/thumb/5/52/Headphone-dynamic-clay.png/640px-Headphone-dynamic-clay.png",
         desc : "Lorem Ipsum Dolor Sit Amet",

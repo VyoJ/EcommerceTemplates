@@ -13,7 +13,7 @@ import {
 import { Button } from "./ui/button";
 
 interface ProductProps extends React.HTMLAttributes<HTMLDivElement> {
-  id: number;
+  prodid: string;
   name: string;
   img: string;
   desc: string;
@@ -23,7 +23,7 @@ interface ProductProps extends React.HTMLAttributes<HTMLDivElement> {
 }
 
 function ProductCard({
-  id,
+  prodid,
   name,
   img,
   desc,
@@ -36,7 +36,7 @@ function ProductCard({
       <CardHeader className="items-start gap-4 space-y-0">
         <div className="space-y-1 mx-auto">
           <CardTitle>
-            <Link href={`/products/${id}`}>{name}</Link>
+            <Link href={`/products/${prodid}`}>{name}</Link>
           </CardTitle>
         </div>
         <div className="w-[250px] h-[250px] mx-auto">

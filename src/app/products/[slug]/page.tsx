@@ -1,9 +1,7 @@
-"use client";
+// "use client";
 
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
-import { products } from "@/data/products";
-import { notFound } from "next/navigation";
 
 interface PageProps {
   params: {
@@ -11,14 +9,24 @@ interface PageProps {
   };
 }
 
-export default function prodPage({ params }: PageProps) {
+async function getProductbyId({ params }: PageProps) {
   const { slug } = params;
-  const prod = products.find((product) => {
-    return product.id == slug;
-  });
+  console.log(slug);
 
-  if (prod == undefined) return notFound;
+  try {
+    const res = await fetch(`http://localhost:3000/api/products/${slug}`);
+    if (!res.ok) {
+      throw new Error("Failed to fetch data");
+    }
+    return res.json();
+  } catch (error) {
+    console.error("Fetch failed:", error);
+    throw error;
+  }
+}
 
+export default async function prodPage({ params }: PageProps) {
+  const prod = await getProductbyId({params});
   return (
     <>
       <section className="grid grid-cols-1 md:grid-cols-2 grid-flow-row justify-items-center align-items-center mt-6 md:mt-12">
@@ -51,3 +59,11 @@ export default function prodPage({ params }: PageProps) {
     </>
   );
 }
+
+
+// Old Logic:
+// const prod = products.find((product) => {
+//   return product.id == slug;
+// });
+
+// if (prod == undefined) return notFound;
