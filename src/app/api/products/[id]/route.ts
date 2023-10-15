@@ -8,16 +8,19 @@ export const GET = async (
 ) => {
   const { id } = params;
 
+  console.log(id)
   try {
     await connectDB();
 
-    const prod = await Product.findById(id);
+    const prod = await Product.find({prodid:id});
 
-    return new NextResponse(JSON.stringify(Product), { status: 200 });
+    return new NextResponse(JSON.stringify(prod), { status: 200 });
   } catch (err) {
     return new NextResponse("Database Error", { status: 500 });
   }
 };
+
+
 
 export const DELETE = async (
   request: NextResponse,

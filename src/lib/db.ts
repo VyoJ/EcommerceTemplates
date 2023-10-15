@@ -32,11 +32,11 @@ async function connectDB() {
     };
 
     cached.promise = connect(MONGODB_URI!, opts)
-      .then((mongoose) => {
+      .then((mongoose:any) => {
         console.log(`New connection established`);
         return mongoose;
       })
-      .catch((error) => {
+      .catch((error:Error) => {
         console.error(`Connection to db failed`);
         throw error;
       });

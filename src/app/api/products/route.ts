@@ -10,7 +10,7 @@ export const GET = async (request: NextResponse) => {
     const products = await Product.find({});
     console.log(products);
 
-    return new NextResponse(JSON.stringify(products), { status: 200 });
+    return new NextResponse(JSON.stringify({data:products}), { status: 200 });
   } catch (err) {
     return new NextResponse("Database Error", { status: 500 });
   }
