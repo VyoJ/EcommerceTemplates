@@ -17,7 +17,7 @@ export default function Navbar() {
   ];
 
   return (
-    <nav className="w-full border-b shadow">
+    <nav className="w-full md:h-[75px] border-b shadow">
       <div className="items-center px-4 max-w-screen-xl mx-auto md:flex md:px-8">
         <div className="flex items-center justify-between py-3 md:py-5 md:block">
           <Link href="/">

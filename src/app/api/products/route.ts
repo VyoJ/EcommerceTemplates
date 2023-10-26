@@ -1,7 +1,6 @@
 import { NextResponse } from "next/server";
 import connectDB from "@/lib/db";
 import Product from "@/models/products";
-import prod from "@/models/products";
 
 export const GET = async (request: NextResponse) => {
   try {

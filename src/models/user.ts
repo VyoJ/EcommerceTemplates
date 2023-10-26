@@ -1,20 +1,14 @@
 import mongoose from "mongoose";
+import { user } from "@/@types/user"
 
 const { Schema } = mongoose;
-
-export interface user {
-    userid: number;
-    name: string;
-    email: string;
-    pwd: string;
-  }
 
 const userSchema = new Schema(
   {
     userid: {
-        type: Number,
-        unique: true,
-        required: true,
+      type: Number,
+      unique: true,
+      required: true,
     },
     name: {
       type: String,
@@ -34,4 +28,5 @@ const userSchema = new Schema(
   { timestamps: true }
 );
 
-export default mongoose.model("User", userSchema);
+const UserModel = mongoose.models.User || mongoose.model<user>('User', userSchema);
+export default UserModel

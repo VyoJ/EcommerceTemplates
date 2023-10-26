@@ -1,24 +1,24 @@
-// "use client";
-
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
 
 interface PageProps {
   params: {
-    slug: number;
+    slug: String;
   };
 }
 
 async function getProductbyId({ params }: PageProps) {
   const { slug } = params;
+  const axios = require("axios");
   console.log(slug);
 
   try {
-    const res = await fetch(`http://localhost:3000/api/products/${slug}`);
+    const res = await axios.get(`http://localhost:3000/api/products/${slug}`);
     if (!res.ok) {
       throw new Error("Failed to fetch data");
     }
-    return res.json();
+    console.log(res);
+    return res.data;
   } catch (error) {
     console.error("Fetch failed:", error);
     throw error;
@@ -26,8 +26,8 @@ async function getProductbyId({ params }: PageProps) {
 }
 
 export default async function prodPage({ params }: PageProps) {
-  const prod = await getProductbyId({params});
-  console.log(prod[0])
+  const prod = await getProductbyId({ params });
+  console.log(prod);
   return (
     <>
       <section className="grid grid-cols-1 md:grid-cols-2 grid-flow-row justify-items-center align-items-center mt-6 md:mt-12">
@@ -41,7 +41,9 @@ export default async function prodPage({ params }: PageProps) {
           />
         </div>
         <div className="space-y-6 mx-8 mt-8 md:mt-0 justify-self-start">
-          <h1 className="text-4xl font-bold tracking-tighter">{prod[0].name}</h1>
+          <h1 className="text-4xl font-bold tracking-tighter">
+            {prod[0].name}
+          </h1>
           <div className="flex space-x-1">{prod[0].rating}</div>
           <p className="text-2xl font-semibold text-zinc-900 dark:text-zinc-50">
             ₹ {prod[0].price}
@@ -60,11 +62,3 @@ export default async function prodPage({ params }: PageProps) {
     </>
   );
 }
-
-
-// Old Logic:
-// const prod = products.find((product) => {
-//   return product.id == slug;
-// });
-
-// if (prod == undefined) return notFound;

@@ -1,5 +1,4 @@
 import Image from "next/image";
-// import { Button } from "@/components/ui/button";
 import Link from "next/link";
 
 import {
@@ -32,7 +31,7 @@ function ProductCard({
   specs,
 }: ProductProps) {
   return (
-    <Card className="border m-auto mb-6 border-gray-300 rounded-md shadow-md lg:p-4 lg:mb-0 lg:mx-4">
+    <Card className="border m-auto mb-6 border-gray-300 rounded-md shadow-md lg:p-4 lg:mx-4">
       <CardHeader className="items-start gap-4 space-y-0">
         <div className="space-y-1 mx-auto">
           <CardTitle>

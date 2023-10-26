@@ -4,15 +4,15 @@ import Product from "@/models/products";
 
 export const GET = async (
   request: NextResponse,
-  { params }: { params: { id: Number } }
+  { params }: { params: { id: String } }
 ) => {
   const { id } = params;
 
-  console.log(id)
+  console.log(`Id:`, id);
   try {
     await connectDB();
 
-    const prod = await Product.find({prodid:id});
+    const prod = await Product.find({ prodid: id });
 
     return new NextResponse(JSON.stringify(prod), { status: 200 });
   } catch (err) {
@@ -20,11 +20,9 @@ export const GET = async (
   }
 };
 
-
-
 export const DELETE = async (
   request: NextResponse,
-  { params }: { params: { id: Number } }
+  { params }: { params: { id: String } }
 ) => {
   const { id } = params;
 

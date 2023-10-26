@@ -1,18 +1,8 @@
 import mongoose from "mongoose"
-import { Product } from '../data/products';
+import { prod } from "@/@types/product";
+// import { Product } from '../data/products';
 
-
-
-const {Schema}=mongoose
-export interface prod {
-  prodid: string;
-  name: string;
-  img: string;
-  desc: string;
-  price: number;
-  rating: number;
-  specs: string;
-}
+const { Schema } = mongoose
 
 const productSchema = new Schema<prod>({
   prodid: {
@@ -45,5 +35,5 @@ const productSchema = new Schema<prod>({
 });
 
 
-const ProductModel=mongoose.models.Product||mongoose.model<prod>('Product', productSchema);
+const ProductModel = mongoose.models.Product || mongoose.model<prod>('Product', productSchema);
 export default ProductModel
