@@ -2,21 +2,49 @@
 
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
-// import { cn } from "@/lib/utils";
+import { useSearchParams } from "next/navigation";
+import { signIn } from "next-auth/react";
+import axios from "axios";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Loader2 } from "lucide-react";
+import { LoginErrorType } from "@/@types/globalTypes";
 
 export default function LogInPage() {
+  const params = useSearchParams();
+
   const [authState, setAuthState] = useState({
     email: "",
     password: "",
   });
+  const [loading, setLoading] = useState<boolean>(false);
+  const [errors, setError] = useState<LoginErrorType>();
 
-  const submitForm = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    console.log("The auth state is", authState);
+  const submitForm = async () => {
+    setLoading(true);
+    axios
+      .post("/api/auth/login", authState)
+      .then((res) => {
+        setLoading(false);
+        const response = res.data;
+        console.log("The response is ", response);
+        if (response.status == 200) {
+          console.log("The user signed in", response);
+          signIn("credentials", {
+            email: authState.email,
+            password: authState.password,
+            callbackUrl: "/",
+            redirect: true,
+          });
+        } else if (response.status == 400) {
+          setError(response?.errors);
+        }
+      })
+      .catch((err) => {
+        setLoading(false);
+        console.log("Error is", err);
+      });
   };
 
   return (
@@ -32,12 +60,15 @@ export default function LogInPage() {
               Enter your email and password
             </p>
           </div>
+          {params.get("message") ? (
+            <p className="font-bold bg-green-300 rounded-md p-4">
+              {params.get("message")}
+            </p>
+          ) : (
+            <p></p>
+          )}
           <div className="grid gap-6">
-            <form
-            action="#"
-            // method="post"
-            // action="/api/auth/callback/credentials"
-            >
+            <form action="#" method="post">
               <div className="grid gap-2">
                 <div className="grid gap-1">
                   <Label className="py-2" htmlFor="email">
@@ -52,7 +83,7 @@ export default function LogInPage() {
                     onChange={(e) =>
                       setAuthState({ ...authState, email: e.target.value })
                     }
-                    // disabled={isLoading}
+                    disabled={loading}
                   />
                   <Label className="py-2" htmlFor="password">
                     Password
@@ -65,18 +96,16 @@ export default function LogInPage() {
                     onChange={(e) =>
                       setAuthState({ ...authState, password: e.target.value })
                     }
-                    // disabled={isLoading}
+                    disabled={loading}
                   />
                 </div>
                 <Button
                   className="mt-2"
-                  // disabled={isLoading}
+                  disabled={loading}
                   onClick={submitForm}
                 >
-                  {/* {isLoading && (
-                    <Loader2 className="h-4 w-4 mr-2 animate-spin" />
-                  )} */}
-                  Sign In with Email
+                  Sign In with Email{" "}
+                  {loading && <Loader2 className="h-4 w-4 mr-2 animate-spin" />}
                 </Button>
               </div>
             </form>

@@ -10,6 +10,7 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Button } from "./ui/button";
+import AddToCart from "./addToCart";
 
 interface ProductProps extends React.HTMLAttributes<HTMLDivElement> {
   prodid: string;
@@ -50,9 +51,7 @@ function ProductCard({
       </CardHeader>
       <CardContent>₹ {price}</CardContent>
       <CardContent>{desc}</CardContent>
-      <CardContent>
-
-      </CardContent>
+      <CardContent></CardContent>
       {/* <CardContent>
         <div className="flex items-center space-x-1 rounded-md bg-secondary text-secondary-foreground">
           <Button variant="secondary" className="px-3 shadow-none">
@@ -62,7 +61,7 @@ function ProductCard({
       </CardContent> */}
       <CardDescription>{specs}</CardDescription>
       <CardFooter className="flex justify-center">
-        <Button>Add to Cart</Button>
+        <AddToCart />
       </CardFooter>
     </Card>
   );

@@ -2,11 +2,12 @@
 
 import Navbar from "@/components/navbar";
 import { ThemeProvider } from "@/components/theme-provider";
-// import { ctx } from "@/context";
+import NextAuthSessionProvider from "./(auth)/provider/SessionProvider";
 import Provider from "@/components/provider";
 import "./globals.css";
 import { Inter } from "next/font/google";
 
+// import { AppProvider } from "@/context";
 // import { cartState } from "@/@types/globalTypes";
 // import { useEffect, useReducer, useState } from "react";
 // import { initialState, reducerFn } from "@/reducer";
@@ -18,8 +19,6 @@ export default function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
-  // const [state, dispatch] = useReducer(reducerFn, initialState);
-
   return (
     <html lang="en">
       <body className={inter.className}>
@@ -29,12 +28,14 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          <ctx.>
+          {/* <AppProvider> */}
+          <NextAuthSessionProvider>
             <Provider>
               <Navbar />
               {children}
             </Provider>
-          </ctx>
+          </NextAuthSessionProvider>
+          {/* </AppProvider> */}
         </ThemeProvider>
       </body>
     </html>

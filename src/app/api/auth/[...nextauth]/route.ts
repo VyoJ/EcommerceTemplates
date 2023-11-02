@@ -21,7 +21,7 @@ const handler = NextAuth({
           headers: { "Content-Type": "application/json" },
         };
         const res = await axios.request(
-          "http://localhost:3000/api/users",
+          "http://localhost:3000/api/auth/login",
           options
         );
         const user = await res.json();
@@ -34,6 +34,7 @@ const handler = NextAuth({
   pages: {
     signIn: "/login",
   },
+  secret: process.env.NEXTAUTH_SECRET,
 });
 
 export { handler as GET, handler as POST };

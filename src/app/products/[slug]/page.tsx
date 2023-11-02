@@ -1,5 +1,6 @@
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
+import AddToCart from "@/components/addToCart";
 
 interface PageProps {
   params: {
@@ -51,9 +52,9 @@ export default async function prodPage({ params }: PageProps) {
           <p className="text-base text-zinc-500 dark:text-zinc-400">
             {prod[0].desc}
           </p>
-          <Button className="w-54 h-12 rounded-md bg-zinc-900 text-zinc-50 shadow-sm dark:bg-zinc-50 dark:text-zinc-900">
-            Add to Cart
-          </Button>
+          <div className="w-54 h-12 rounded-md bg-zinc-900 text-zinc-50 shadow-sm dark:bg-zinc-50 dark:text-zinc-900">
+            <AddToCart/>
+          </div>
         </div>
       </section>
       <p className="text-base text-zinc-500 dark:text-zinc-400 m-8">

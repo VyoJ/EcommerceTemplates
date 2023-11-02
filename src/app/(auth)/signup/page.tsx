@@ -1,22 +1,46 @@
 "use client";
 
 import Link from "next/link";
+import axios from "axios";
+import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Loader2 } from "lucide-react";
 import { useState } from "react";
+import { registerErrorType } from "@/@types/globalTypes";
 
 export default function SignUpPage() {
-  const [authState, setAuthState] = useState({
+  const router = useRouter();
+
+  const [loading, setLoading] = useState<boolean>(false);
+  const [userState, setUserState] = useState({
     name: "",
     email: "",
     password: "",
   });
+  const [errors, setError] = useState<registerErrorType>({});
 
-  const submitForm = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    console.log("The auth state is", authState);
+  const submitForm = async () => {
+    setLoading(true);
+    console.log("The payload is", userState);
+    axios
+      .post("/api/auth/signup", userState)
+      .then((res) => {
+        setLoading(false);
+        const response = res.data;
+        console.log("The response is", response);
+        if (response.status == 200) {
+          alert(`Account created successfully! Redirecting...`)
+          console.log(`Account Created yay!`);
+          router.push(`/login?message=${response.msg}`);
+        } else if (response?.status == 400) {
+          console.log(response?.errors);
+        } else {
+          console.log({});
+        }
+      })
+      .catch((err) => console.log("The error is", err));
   };
 
   return (
@@ -36,10 +60,7 @@ export default function SignUpPage() {
               </p>
             </div>
             <div className="grid gap-6">
-              <form
-              // method="post"
-              // action="/api/auth/callback/credentials"
-              >
+              <form method="post" action="#">
                 <div className="grid gap-2">
                   <div className="grid gap-1">
                     <Label className="py-2" htmlFor="name">
@@ -51,9 +72,9 @@ export default function SignUpPage() {
                       placeholder="John Wick"
                       required
                       onChange={(e) =>
-                        setAuthState({ ...authState, name: e.target.value })
+                        setUserState({ ...userState, name: e.target.value })
                       }
-                      // disabled={isLoading}
+                      disabled={loading}
                     />
                     <Label className="py-2" htmlFor="email">
                       Email
@@ -65,9 +86,9 @@ export default function SignUpPage() {
                       autoComplete="email"
                       required
                       onChange={(e) =>
-                        setAuthState({ ...authState, email: e.target.value })
+                        setUserState({ ...userState, email: e.target.value })
                       }
-                      // disabled={isLoading}
+                      disabled={loading}
                     />
                     <Label className="py-2" htmlFor="password">
                       Password
@@ -78,24 +99,27 @@ export default function SignUpPage() {
                       placeholder="****"
                       required
                       onChange={(e) =>
-                        setAuthState({ ...authState, password: e.target.value })
+                        setUserState({ ...userState, password: e.target.value })
                       }
-                      // disabled={isLoading}
+                      disabled={loading}
                     />
                   </div>
                   <Button
-                    className="mt-2"
-                    // disabled={isLoading}
+                    className={`mt-2 ${loading ? "bg-gray-600" : ""}`}
+                    disabled={loading}
                     onClick={submitForm}
                   >
-                    {/* {isLoading && (
-                    <Loader2 className="h-4 w-4 mr-2 animate-spin" />
-                  )} */}
-                    Sign Up with Email
+                    Create Account{" "}
+                    {loading && (
+                      <Loader2 className="h-4 w-4 mr-2 animate-spin" />
+                    )}
                   </Button>
                 </div>
               </form>
             </div>
+            <Link href="/login" className="text-center">
+              Already have an account? Click to login!
+            </Link>
             <p className="px-8 text-center text-sm text-muted-foreground">
               By continuing, you agree to our{" "}
               <Link
