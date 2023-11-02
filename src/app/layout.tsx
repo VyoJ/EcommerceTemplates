@@ -3,6 +3,7 @@
 import Navbar from "@/components/navbar";
 import { ThemeProvider } from "@/components/theme-provider";
 import NextAuthSessionProvider from "./(auth)/provider/SessionProvider";
+import { CartProvider } from "@/context";
 import Provider from "@/components/provider";
 import "./globals.css";
 import { Inter } from "next/font/google";
@@ -28,14 +29,14 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          {/* <AppProvider> */}
           <NextAuthSessionProvider>
-            <Provider>
-              <Navbar />
-              {children}
-            </Provider>
+            <CartProvider>
+              <Provider>
+                <Navbar />
+                {children}
+              </Provider>
+            </CartProvider>
           </NextAuthSessionProvider>
-          {/* </AppProvider> */}
         </ThemeProvider>
       </body>
     </html>

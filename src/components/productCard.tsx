@@ -61,7 +61,7 @@ function ProductCard({
       </CardContent> */}
       <CardDescription>{specs}</CardDescription>
       <CardFooter className="flex justify-center">
-        <AddToCart />
+        <AddToCart prodid={prodid} name={name} img={img} price={price}/>
       </CardFooter>
     </Card>
   );

@@ -1,6 +1,56 @@
+"use client";
+
+import { createContext, useContext, useReducer } from "react";
+import { CartState, CartAction } from "@/@types/globalTypes";
+import { cartReducer } from "@/reducer";
+
+const initialState: CartState = {
+  items: [],
+};
+
+export const CartContext = createContext<{
+  state: CartState;
+  dispatch: React.Dispatch<CartAction>;
+}>({
+  state: initialState,
+  dispatch: () => undefined,
+});
+
+export const CartProvider = ({ children }: { children: React.ReactNode }) => {
+  const [state, dispatch] = useReducer(cartReducer, initialState);
+
+  const addToCart = (product: any) => {
+    const updatedCart = [...state.items, product];
+    dispatch({
+      type: "ADD",
+      payload: {
+        items: updatedCart,
+      },
+    });
+  };
+
+  const removeFromCart = (id: string) => {
+    const updatedCart = state.items.filter(
+      (currentProduct: any) => currentProduct.id !== id
+    );
+    dispatch({
+      type: "REMOVE",
+      payload: {
+        items: updatedCart,
+      },
+    });
+  };
+
+  return (
+    <CartContext.Provider value={{ state, dispatch }}>
+      {children}
+    </CartContext.Provider>
+  );
+};
+
 // "use client"
 
-// // import React, { createContext, useReducer, Dispatch } from "react"; 
+// // import React, { createContext, useReducer, Dispatch } from "react";
 // // import { cartStateType } from "@/@types/globalTypes";
 // // import { prod } from "@/@types/product";
 // // import { productReducer } from "@/reducer";
@@ -34,9 +84,6 @@
 // // };
 
 // // export { AppProvider, AppContext };
-
-
-
 
 // import React, { createContext, useReducer, Dispatch } from "react";
 // import {
@@ -90,9 +137,6 @@
 // };
 
 // export { AppProvider, AppContext };
-
-
-
 
 // // const cartState = {
 // //   products: [],

@@ -1,22 +1,28 @@
+"use client"
+
 import CartCard from "@/components/cartCard";
-import { products } from "@/data/products";
-import { Product } from "@/data/products";
+import { CartContext } from "@/context";
+import React, { useContext, useEffect } from "react";
+import { AddToCartProps } from "@/components/addToCart";
 
 function Cart() {
-  console.log(products);
+  const { state, dispatch } = useContext(CartContext);
+  useEffect(() => {
+    console.log(state);
+    }, [state]);
+  console.log(state)
+
   return (
     <div className="h-[calc(100vh-75px)] pt-20">
       <h1 className="mb-10 text-center text-2xl font-bold">Cart Items</h1>
       <div className="mx-auto max-w-5xl justify-center px-6 md:flex md:space-x-6 xl:px-0">
         <div className="rounded-lg md:w-2/3">
-          {products.map((products: Product, index: number) => (
+          {state.items.map((products: AddToCartProps, index: number) => (
             <div key={index}>
               <CartCard
                 name={products.name}
                 img={products.img}
-                desc={products.desc}
                 price={products.price}
-                specs={products.specs}
               />
             </div>
           ))}

@@ -3,12 +3,10 @@ import Image from "next/image";
 interface ProductProps extends React.HTMLAttributes<HTMLDivElement> {
   name: string;
   img: string;
-  desc: string;
   price: number;
-  specs: string;
 }
 
-function CartCard({ name, img, desc, price, specs }: ProductProps) {
+function CartCard({ name, img, price }: ProductProps) {
   return (
     <div className="justify-between mb-6 rounded-lg p-6 shadow-md sm:flex sm:justify-start">
       <div className="w-40 h-40">
@@ -22,7 +20,6 @@ function CartCard({ name, img, desc, price, specs }: ProductProps) {
       <div className="sm:ml-4 sm:flex sm:w-full sm:justify-between">
         <div className="mt-5 sm:mt-0">
           <h2 className="text-lg font-bold">{name}</h2>
-          <p className="mt-1 text-xs">{desc}</p>
         </div>
         <div className="mt-4 flex justify-between sm:space-y-6 sm:mt-0 sm:block sm:space-x-6">
           <div className="flex items-center space-x-4">
