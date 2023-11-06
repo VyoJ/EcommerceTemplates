@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
-import { useSearchParams } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { signIn } from "next-auth/react";
 import axios from "axios";
 import { Button } from "@/components/ui/button";
@@ -13,6 +13,7 @@ import { LoginErrorType } from "@/@types/globalTypes";
 
 export default function LogInPage() {
   const params = useSearchParams();
+  const router = useRouter();
 
   const [authState, setAuthState] = useState({
     email: "",
@@ -20,6 +21,8 @@ export default function LogInPage() {
   });
   const [loading, setLoading] = useState<boolean>(false);
   const [errors, setError] = useState<LoginErrorType>();
+
+
 
   const submitForm = async () => {
     setLoading(true);
@@ -31,13 +34,19 @@ export default function LogInPage() {
         console.log("The response is ", response);
         if (response.status == 200) {
           console.log("The user signed in", response);
-          signIn("credentials", {
+          signIn("next-auth-credentials", {
             email: authState.email,
             password: authState.password,
             callbackUrl: "/",
             redirect: true,
-          });
-        } else if (response.status == 400) {
+          }).then((res)=>{
+            console.log("success",res)
+          }).catch((err)=>{
+            console.log("error",err)
+          })
+
+        } else if (response.status == 400 || response.status == 401) {
+          console.log("error response", response);
           setError(response?.errors);
         }
       })

@@ -6,10 +6,10 @@ import { signIn } from "next-auth/react";
 
 export const POST = async (request: NextResponse) => {
   const body = await request.json();
+  console.log(body.params);
   const output = new UserModel(body);
   try {
     await connectDB();
-    console.log(output)
     const user = await UserModel.findOne({ email: output.email });
     if (user) {
       const checkPassword = bcrypt.compareSync(output.password!, user.password);
