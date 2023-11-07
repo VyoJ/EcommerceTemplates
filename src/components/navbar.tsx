@@ -5,9 +5,11 @@ import Link from "next/link";
 import { Menu, Search } from "lucide-react";
 import { ModeToggle } from "./themeToggle";
 import { Button } from "./ui/button";
+import { usePathname } from 'next/navigation';
 
 export default function Navbar() {
   const [state, setState] = React.useState(false);
+  const pathname = usePathname();
 
   const menus = [
     { title: "Home", path: "/" },
@@ -16,6 +18,9 @@ export default function Navbar() {
     { title: "Contact Us", path: "/" },
   ];
 
+  if (pathname.startsWith("/admin")) {
+    return null;
+  }
   return (
     <nav className="w-full md:h-[75px] border-b shadow">
       <div className="items-center px-4 max-w-screen-xl mx-auto md:flex md:px-8">

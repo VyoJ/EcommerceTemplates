@@ -11,10 +11,12 @@ export const GET = async (
   console.log(`Id:`, id);
   try {
     await connectDB();
+    // console.log(Product.collection.name)
 
-    const prod = await Product.find({ prodid: id });
+    const prod = await Product.findOne({}).exec();
+    console.log(prod);
 
-    return new NextResponse(JSON.stringify(prod), { status: 200 });
+    return new NextResponse(JSON.stringify(prod.data), { status: 200 });
   } catch (err) {
     return new NextResponse("Database Error", { status: 500 });
   }
