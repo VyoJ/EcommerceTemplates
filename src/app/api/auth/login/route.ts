@@ -1,12 +1,12 @@
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 import connectDB from "@/lib/db";
 import UserModel from "@/models/user";
 import bcrypt from "bcryptjs";
 import { signIn } from "next-auth/react";
 
-export const POST = async (request: NextResponse) => {
+export const POST = async (request: NextRequest) => {
   const body = await request.json();
-  console.log(body.params);
+  console.log(body);
   const output = new UserModel(body);
   try {
     await connectDB();
