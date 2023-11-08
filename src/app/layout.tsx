@@ -7,7 +7,6 @@ import { CartProvider } from "@/context";
 import Provider from "@/components/provider";
 import "./globals.css";
 import { Inter } from "next/font/google";
-import { useSession } from "next-auth/react";
 
 // import { AppProvider } from "@/context";
 // import { cartState } from "@/@types/globalTypes";

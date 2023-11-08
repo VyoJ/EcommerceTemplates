@@ -4,8 +4,7 @@ import CredentialsProvider from "next-auth/providers/credentials";
 const handler = NextAuth({
   providers: [
     CredentialsProvider({
-      id:'next-auth-credentials',
-      name: "Credentials",
+      name: "credentials",
       credentials: {
         email: { label: "Email", type: "email" },
         password: { label: "Password", type: "password" },
@@ -31,7 +30,7 @@ const handler = NextAuth({
         try{
           const user = await res.data;
           console.log("user",user)
-          if (user) return user;
+          if (user) return user.data;
         }
         catch(err){
          console.log("err",err);
@@ -41,6 +40,9 @@ const handler = NextAuth({
       },
     }),
   ],
+  session:{
+    strategy:"jwt"
+  },
   pages: {
     signIn: "/login",
   },

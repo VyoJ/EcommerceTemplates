@@ -1,5 +1,4 @@
 import Image from "next/image";
-import Link from "next/link";
 
 import {
   Card,
@@ -11,8 +10,11 @@ import {
 } from "@/components/ui/card";
 import { Button } from "./ui/button";
 import AddToCart from "./addToCart";
+import { useRouter } from "next/navigation";
+import Link from "next/link";
 
 interface ProductProps extends React.HTMLAttributes<HTMLDivElement> {
+  id:string;
   prodid: string;
   name: string;
   img: string;
@@ -23,6 +25,7 @@ interface ProductProps extends React.HTMLAttributes<HTMLDivElement> {
 }
 
 function ProductCard({
+  id,
   prodid,
   name,
   img,
@@ -31,13 +34,20 @@ function ProductCard({
   rating,
   specs,
 }: ProductProps) {
+
+
+
   return (
+    <>
+    
     <Card className="border m-auto mb-6 border-gray-300 rounded-md shadow-md lg:p-4 lg:mx-4">
       <CardHeader className="items-start gap-4 space-y-0">
         <div className="space-y-1 mx-auto">
+        <Link href={`/products/${id}`}>
           <CardTitle>
-            <Link href={`/products/${prodid}`}>{name}</Link>
+            {name}
           </CardTitle>
+          </Link>
         </div>
         <div className="w-[250px] h-[250px] mx-auto">
           <Image
@@ -64,6 +74,8 @@ function ProductCard({
         <AddToCart prodid={prodid} name={name} img={img} price={price}/>
       </CardFooter>
     </Card>
+  
+    </>
   );
 }
 

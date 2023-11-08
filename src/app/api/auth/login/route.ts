@@ -16,7 +16,13 @@ export const POST = async (request: NextResponse) => {
       console.info("the password check returned ", checkPassword);
       if (checkPassword) {
         return NextResponse.json(
-          { status: 200, message: "User Logged in successfully!" },
+          { status: 200,
+             message: "User Logged in successfully!",
+             data:{
+              email:user.email,
+              password:output.password
+             }
+             },
           { status: 200 }
         );
       }

@@ -25,6 +25,7 @@ export default async function Products() {
         {products.data.map((products: prod, index: number) => (
           <div key={index}>
             <ProductCard
+              id={products._id}
               prodid={products.prodid}
               name={products.name}
               img={products.img}

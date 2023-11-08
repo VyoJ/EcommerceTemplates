@@ -19,27 +19,27 @@ export const CartContext = createContext<{
 export const CartProvider = ({ children }: { children: React.ReactNode }) => {
   const [state, dispatch] = useReducer(cartReducer, initialState);
 
-  const addToCart = (product: any) => {
-    const updatedCart = [...state.items, product];
-    dispatch({
-      type: "ADD",
-      payload: {
-        items: updatedCart,
-      },
-    });
-  };
+  // const addToCart = (product: any) => {
+  //   const updatedCart = [...state.items, product];
+  //   dispatch({
+  //     type: "ADD",
+  //     payload: {
+  //       items: updatedCart,
+  //     },
+  //   });
+  // };
 
-  const removeFromCart = (id: string) => {
-    const updatedCart = state.items.filter(
-      (currentProduct: any) => currentProduct.id !== id
-    );
-    dispatch({
-      type: "REMOVE",
-      payload: {
-        items: updatedCart,
-      },
-    });
-  };
+  // const removeFromCart = (id: string) => {
+  //   const updatedCart = state.items.filter(
+  //     (currentProduct: any) => currentProduct.id !== id
+  //   );
+  //   dispatch({
+  //     type: "REMOVE",
+  //     payload: {
+  //       items: updatedCart,
+  //     },
+  //   });
+  // };
 
   return (
     <CartContext.Provider value={{ state, dispatch }}>
