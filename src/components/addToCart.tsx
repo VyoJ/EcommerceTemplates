@@ -14,7 +14,7 @@ export interface AddToCartProps {
 
 const AddToCart = ({ prodid, name, img, price }: AddToCartProps) => {
   const { state, dispatch } = useContext(CartContext);
-
+  console.log(state);
   return (
     <div>
       <Button
@@ -23,7 +23,6 @@ const AddToCart = ({ prodid, name, img, price }: AddToCartProps) => {
             type: "ADD",
             payload: { prodid, name, img, price },
           });
-          console.log(state);
         }}
       >
         Add to Cart

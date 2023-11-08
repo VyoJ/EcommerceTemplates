@@ -13,8 +13,8 @@ export const GET = async (
     await connectDB();
     // console.log(Product.collection.name)
 
-    const prod = await Product.findOne({}).exec();
-    console.log(prod);
+    const prod = await Product.findById(id);
+    console.log({prod})
 
     return new NextResponse(JSON.stringify(prod.data), { status: 200 });
   } catch (err) {

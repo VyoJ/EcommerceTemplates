@@ -13,6 +13,8 @@ import { Inter } from "next/font/google";
 // import { useEffect, useReducer, useState } from "react";
 // import { initialState, reducerFn } from "@/reducer";
 
+
+
 const inter = Inter({ subsets: ["latin"] });
 
 export default function RootLayout({
