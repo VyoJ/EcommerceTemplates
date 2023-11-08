@@ -12,7 +12,8 @@ export const GET = async (
   try {
     await connectDB();
 
-    const prod = await Product.find({ prodid: id });
+    const prod = await Product.findById(id);
+    console.log({prod})
 
     return new NextResponse(JSON.stringify(prod), { status: 200 });
   } catch (err) {

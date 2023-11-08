@@ -34,9 +34,9 @@ export default function LogInPage() {
         console.log("The response is ", response);
         if (response.status == 200) {
           console.log("The user signed in", response);
-          signIn("next-auth-credentials", {
-            email: authState.email,
-            password: authState.password,
+          signIn("credentials", {
+            email: response.data.email,
+            password: response.data.password,
             callbackUrl: "/",
             redirect: true,
           }).then((res)=>{
