@@ -14,10 +14,6 @@ const handler = NextAuth({
         console.log(credentials);
 
         const options = {
-          // params: {
-          //   email: credentials?.email,
-          //   password: credentials?.password,
-          // },
           headers: { "Content-Type": "application/json" },
           withCredentials: true
         };

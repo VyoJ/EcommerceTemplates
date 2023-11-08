@@ -1,6 +1,6 @@
 "use client";
 
-import { createContext, useContext, useReducer } from "react";
+import { createContext,useReducer } from "react";
 import { CartState, CartAction } from "@/@types/globalTypes";
 import { cartReducer } from "@/reducer";
 
