@@ -1,16 +1,26 @@
+"use client"
+
 import Image from "next/image";
 import { Card, CardContent } from "./ui/card";
 import { Button } from "./ui/button";
 import Link from "next/link";
 import { Trash2 } from "lucide-react";
+import { CartContext } from "@/context";
+import { useToast } from "./ui/use-toast";
+import { useContext } from "react";
 
 interface ProductProps extends React.HTMLAttributes<HTMLDivElement> {
+  prodid: string,
   name: string;
   img: string;
   price: number;
 }
 
-function CartCard({ name, img, price }: ProductProps) {
+function CartCard({ prodid, name, img, price }: ProductProps) {
+  const { state, dispatch } = useContext(CartContext);
+  console.log(state);
+  const { toast } = useToast();
+
   return (
     <Card>
       <CardContent>
@@ -29,8 +39,20 @@ function CartCard({ name, img, price }: ProductProps) {
           </div>
           <div className="flex items-center">
             <h4 className="font-semibold md:mx-4">₹ {price}</h4>
-            <Button variant="ghost" size="icon">
-              <Trash2/>
+            <Button
+              variant="ghost"
+              size="icon"
+              onClick={() => {
+                dispatch({
+                  type: "REMOVE",
+                  payload: { prodid, name, img, price },
+                });
+                toast({
+                  title: "Product removed from cart",
+                });
+              }}
+            >
+              <Trash2 />
             </Button>
           </div>
         </div>
