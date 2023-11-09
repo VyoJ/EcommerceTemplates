@@ -64,10 +64,18 @@ import CartCard from "@/components/cartCard";
 
 export default function Cart() {
   const { state, dispatch } = useContext(CartContext);
-  let total: number;
+  let total: number = 0;
+
+  const calculateTotal = () => {
+    console.log(total);
+    total = state.items.reduce((total, product) => total + product.price, 0);
+    console.log(total);
+    return total;
+  };
+
   useEffect(() => {
+    total = calculateTotal();
     console.log(state);
-    
   }, [state]);
   console.log(state);
 
@@ -83,7 +91,9 @@ export default function Cart() {
               <CardContent>
                 <div className="flex items-center justify-between py-4 lg:mx-4 border-b">
                   <h2 className="text-lg md:text-xl font-semibold">Product</h2>
-                  <h2 className="text-lg md:text-xl font-semibold mr-14">Price</h2>
+                  <h2 className="text-lg md:text-xl font-semibold mr-14">
+                    Price
+                  </h2>
                 </div>
                 {state.items.map((products: AddToCartProps, index: number) => (
                   <div key={index}>
@@ -105,7 +115,7 @@ export default function Cart() {
               <CardContent>
                 <div className="flex items-center justify-between py-4 border-b">
                   <h2 className="text-lg font-semibold">Subtotal</h2>
-                  <h2 className="text-lg font-semibold">₹ </h2>
+                  <h2 className="text-lg font-semibold">₹ {total}</h2>
                 </div>
                 <div className="flex items-center justify-between py-4 border-b">
                   <h2 className="text-lg font-semibold">Tax and Shipping</h2>
@@ -113,7 +123,7 @@ export default function Cart() {
                 </div>
                 <div className="flex items-center justify-between py-4 border-b">
                   <h2 className="text-lg font-semibold">Total</h2>
-                  <h2 className="text-lg font-semibold">₹ </h2>
+                  <h2 className="text-lg font-semibold">₹ {total+100}</h2>
                 </div>
                 <Button className="w-full mt-6" size="lg">
                   Checkout
