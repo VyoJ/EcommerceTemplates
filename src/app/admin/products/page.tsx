@@ -1,4 +1,4 @@
-import { AdminSidebar } from "@/components/adminSidebar";
+import AdminSidebar from "@/components/adminSidebar";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 
@@ -14,7 +14,7 @@ function AdminProducts() {
         </div>
         <div className="mx-auto">
           <Button>
-            <Link href="/">Update Product</Link>
+            <Link href="/admin/products/update">Update Product</Link>
           </Button>
         </div>
         <div className="mx-auto">
