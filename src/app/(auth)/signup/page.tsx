@@ -9,9 +9,11 @@ import { Label } from "@/components/ui/label";
 import { Loader2 } from "lucide-react";
 import { useState } from "react";
 import { registerErrorType } from "@/@types/globalTypes";
+import { useToast } from "@/components/ui/use-toast";
 
 export default function SignUpPage() {
   const router = useRouter();
+  const { toast } = useToast();
 
   const [loading, setLoading] = useState<boolean>(false);
   const [userState, setUserState] = useState({
@@ -31,13 +33,24 @@ export default function SignUpPage() {
         const response = res.data;
         console.log("The response is", response);
         if (response.status == 200) {
-          alert(`Account created successfully! Redirecting...`)
+          toast({
+            title: "Account created successfully!",
+            description: "Redirecting to Login...",
+          });
           console.log(`Account Created yay!`);
-          router.push(`/login?message=${response.msg}`);
+          router.push(`/login`);
         } else if (response?.status == 400) {
+          toast({
+            title: "Account could not be created!",
+            description: "Please try again later",
+          });
           console.log(response?.errors);
         } else {
           console.log({});
+          toast({
+            title: "Account could not be created!",
+            description: "Please try again later",
+          });
         }
       })
       .catch((err) => console.log("The error is", err));

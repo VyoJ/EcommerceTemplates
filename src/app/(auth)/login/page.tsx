@@ -2,7 +2,6 @@
 
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
-import { useRouter, useSearchParams } from "next/navigation";
 import { signIn } from "next-auth/react";
 import axios from "axios";
 import { Button } from "@/components/ui/button";
@@ -10,11 +9,9 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Loader2 } from "lucide-react";
 import { LoginErrorType } from "@/@types/globalTypes";
+import { useToast } from "@/components/ui/use-toast";
 
 export default function LogInPage() {
-  const params = useSearchParams();
-  const router = useRouter();
-
   const [authState, setAuthState] = useState({
     email: "",
     password: "",
@@ -22,7 +19,7 @@ export default function LogInPage() {
   const [loading, setLoading] = useState<boolean>(false);
   const [errors, setError] = useState<LoginErrorType>();
 
-
+  const { toast } = useToast();
 
   const submitForm = async () => {
     setLoading(true);
@@ -39,19 +36,34 @@ export default function LogInPage() {
             password: response.data.password,
             callbackUrl: "/",
             redirect: true,
-          }).then((res)=>{
-            console.log("success",res)
-          }).catch((err)=>{
-            console.log("error",err)
           })
-
+            .then((res) => {
+              toast({
+                title: "Logged in successfully!",
+                description: "Redirecting to home...",
+              });
+              console.log("success", res);
+            })
+            .catch((err) => {
+              console.log("error", err);
+            });
         } else if (response.status == 400 || response.status == 401) {
+          toast({
+            variant: "destructive",
+            title: "Uh-oh! Could not login",
+            description: "Please try again",
+          });
           console.log("error response", response);
           setError(response?.errors);
         }
       })
       .catch((err) => {
         setLoading(false);
+        toast({
+          variant: "destructive",
+          title: "Uh-oh! Could not login",
+          description: "Please try again",
+        });
         console.log("Error is", err);
       });
   };
@@ -69,13 +81,6 @@ export default function LogInPage() {
               Enter your email and password
             </p>
           </div>
-          {params.get("message") ? (
-            <p className="font-bold bg-green-300 rounded-md p-4">
-              {params.get("message")}
-            </p>
-          ) : (
-            <p></p>
-          )}
           <div className="grid gap-6">
             <form action="#" method="post">
               <div className="grid gap-2">

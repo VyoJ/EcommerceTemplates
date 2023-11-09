@@ -1,4 +1,8 @@
 import Image from "next/image";
+import { Card, CardContent } from "./ui/card";
+import { Button } from "./ui/button";
+import Link from "next/link";
+import { Trash2 } from "lucide-react";
 
 interface ProductProps extends React.HTMLAttributes<HTMLDivElement> {
   name: string;
@@ -8,40 +12,30 @@ interface ProductProps extends React.HTMLAttributes<HTMLDivElement> {
 
 function CartCard({ name, img, price }: ProductProps) {
   return (
-    <div className="justify-between mb-6 rounded-lg p-6 shadow-md sm:flex sm:justify-start">
-      <div className="w-40 h-40">
-        <Image
-          src={img}
-          alt="product-image"
-          height={160}
-          width={160}
-        />
-      </div>
-      <div className="sm:ml-4 sm:flex sm:w-full sm:justify-between">
-        <div className="mt-5 sm:mt-0">
-          <h2 className="text-lg font-bold">{name}</h2>
-        </div>
-        <div className="mt-4 flex justify-between sm:space-y-6 sm:mt-0 sm:block sm:space-x-6">
-          <div className="flex items-center space-x-4">
-            <p className="text-sm">{price}</p>
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke-width="1.5"
-              stroke="currentColor"
-              className="h-5 w-5 cursor-pointer duration-150 hover:text-red-500"
-            >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                d="M6 18L18 6M6 6l12 12"
-              />
-            </svg>
+    <Card>
+      <CardContent>
+        <div className="flex items-center justify-between py-4 border-b">
+          <div className="flex items-center gap-4 lg:gap-8">
+            <Image
+              alt={name}
+              className="rounded-lg object-cover aspect-square"
+              height={100}
+              src={img}
+              width={100}
+            />
+            <Link href="/products">
+              <h3 className="font-semibold">{name}</h3>
+            </Link>
+          </div>
+          <div className="flex items-center">
+            <h4 className="font-semibold md:mx-4">₹ {price}</h4>
+            <Button variant="ghost" size="icon">
+              <Trash2/>
+            </Button>
           </div>
         </div>
-      </div>
-    </div>
+      </CardContent>
+    </Card>
   );
 }
 

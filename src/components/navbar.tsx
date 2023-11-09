@@ -2,12 +2,15 @@
 
 import * as React from "react";
 import Link from "next/link";
-import { Menu, Search } from "lucide-react";
+import { Menu, Search, ShoppingCart } from "lucide-react";
 import { ModeToggle } from "./themeToggle";
 import { Button } from "./ui/button";
+import { UserAvatar } from "./userAvatar";
+import { useSession } from "next-auth/react";
 
 export default function Navbar() {
   const [state, setState] = React.useState(false);
+  const { status } = useSession();
 
   const menus = [
     { title: "Home", path: "/" },
@@ -52,11 +55,19 @@ export default function Navbar() {
               </li>
             ))}
             <li>
-              <Link href="/login">
-                <Button>Log In</Button>
-              </Link>
+              {status !== "authenticated" && (
+                <Link href="/login">
+                  <Button>Log In</Button>
+                </Link>
+              )}
+              {status === "authenticated" && <UserAvatar />}
             </li>
-            <ModeToggle/>
+            <Link href="/cart">
+              <Button variant="ghost" size="icon">
+                <ShoppingCart />
+              </Button>
+            </Link>
+            <ModeToggle />
           </ul>
         </div>
       </div>

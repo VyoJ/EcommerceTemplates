@@ -4,6 +4,7 @@ import React, { useContext } from "react";
 import { CartContext } from "@/context";
 // import { Operations } from "@/@types/globalTypes";
 import { Button } from "./ui/button";
+import { useToast } from "./ui/use-toast";
 
 export interface AddToCartProps {
   prodid: string;
@@ -15,6 +16,8 @@ export interface AddToCartProps {
 const AddToCart = ({ prodid, name, img, price }: AddToCartProps) => {
   const { state, dispatch } = useContext(CartContext);
   console.log(state);
+  const { toast } = useToast();
+
   return (
     <div>
       <Button
@@ -22,6 +25,9 @@ const AddToCart = ({ prodid, name, img, price }: AddToCartProps) => {
           dispatch({
             type: "ADD",
             payload: { prodid, name, img, price },
+          });
+          toast({
+            title: "Product added to cart",
           });
         }}
       >
