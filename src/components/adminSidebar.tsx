@@ -2,13 +2,11 @@
 
 import { Button } from "@/components/ui/button";
 import { HomeIcon, FolderOpen, Users2, Settings } from "lucide-react";
-import { useSession, signOut } from "next-auth/react";
+import { signOut } from "next-auth/react";
 import Link from "next/link";
 import { ModeToggle } from "./themeToggle";
 
 export default function AdminSidebar() {
-  const { data: session } = useSession();
-
   return (
     <section className="h-screen w-64 flex flex-col justify-between bg-gray-800 text-white">
       <div>
@@ -45,7 +43,7 @@ export default function AdminSidebar() {
           </ul>
         </nav>
       </div>
-      <Button className="m-6" variant="destructive" onClick={() => signOut()}>
+      <Button className="m-6" variant="destructive" onClick={() => signOut({ callbackUrl: 'http://localhost:3000/' })}>
         Logout
       </Button>
     </section>

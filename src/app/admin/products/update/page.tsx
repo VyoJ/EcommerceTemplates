@@ -2,7 +2,7 @@ import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 
-export default function AddProduct() {
+export default function UpdateProduct() {
   return (
     <div className="max-w-7xl mx-[5%] px-4 lg:px-8 py-6 mt-[5%] dark:bg-gray-800">
       <h1 className="text-2xl md:text-3xl font-bold text-gray-900 dark:text-white">
@@ -77,7 +77,7 @@ export default function AddProduct() {
             />
           </div>
         </div>
-        <Button type="submit">Create Product</Button>
+        <Button type="submit">Update Product</Button>
       </form>
     </div>
   );

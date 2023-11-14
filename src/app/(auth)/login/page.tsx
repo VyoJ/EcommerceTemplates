@@ -31,27 +31,47 @@ export default function LogInPage() {
         console.log("The response is ", response);
         if (response.status == 200) {
           console.log("The user signed in", response);
+          if (response.data.email === "admin@admin.com") {
           signIn("credentials", {
             email: response.data.email,
             password: response.data.password,
-            callbackUrl: "/",
+            callbackUrl: "/admin",
             redirect: true,
           })
             .then((res) => {
               toast({
                 title: "Logged in successfully!",
-                description: "Redirecting to home...",
+                description: "Redirecting to admin dashboard...",
               });
               console.log("success", res);
             })
             .catch((err) => {
               console.log("error", err);
             });
+          }
+          else {
+            signIn("credentials", {
+              email: response.data.email,
+              password: response.data.password,
+              callbackUrl: "/",
+              redirect: true,
+            })
+              .then((res) => {
+                toast({
+                  title: "Logged in successfully!",
+                  description: "Redirecting to home...",
+                });
+                console.log("success", res);
+              })
+              .catch((err) => {
+                console.log("error", err);
+              });
+          }
         } else if (response.status == 400 || response.status == 401) {
           toast({
             variant: "destructive",
             title: "Uh-oh! Could not login",
-            description: "Please try again",
+            description: "Please check your email and password and  try again",
           });
           console.log("error response", response);
           setError(response?.errors);
