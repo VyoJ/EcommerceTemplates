@@ -1,65 +1,86 @@
 "use client"
 // import { useSession } from "next-auth/react"
 
-// export default function Home() {
-//   const { data: session, status } = useSession()
-//   console.log("Sessions:",session,status)
-//   return (
-//     <div>
-//       <h1>Test</h1>
-//     </div>
-//   )
-// }
+import { useEffect, useState } from 'react'
+import { AnimatePresence } from 'framer-motion';
+import PreLoader from '@/components/preLoader';
 
-import React from "react";
-import { motion } from "framer-motion";
+export default function Home() {
+  // const { data: session, status } = useSession()
+  // console.log("Sessions:",session,status)
 
-const AnimatedTextCharacter = () => {
- const letters = Array.from("Hello World!");
+  const [isLoading, setIsLoading] = useState(true);
 
- const container = {
-   hidden: { opacity: 0 },
-   visible: (i = 1) => ({
-     opacity: 1,
-     transition: { staggerChildren: 0.03, delayChildren: 0.04 * i },
-   }),
- };
+  useEffect( () => {
+    (
+      async () => {
+          setTimeout( () => {
+            setIsLoading(false);
+            document.body.style.cursor = 'default'
+            window.scrollTo(0,0);
+          }, 2000)
+      }
+    )()
+  }, [])
 
- const child = {
-   visible: {
-     opacity: 1,
-     x: 0,
-     y: 0,
-     transition: {
-       type: "spring",
-       damping: 12,
-       stiffness: 100,
-     },
-   },
-   hidden: {
-     opacity: 0,
-     x: -20,
-     y: 10,
-     transition: {
-       type: "spring",
-       damping: 12,
-       stiffness: 100,
-     },
-   },
- };
+  return (
+    <div>
+      <AnimatePresence mode='wait'>
+        {isLoading && <PreLoader />}
+      </AnimatePresence>
+    </div>
+  )
+}
 
- return (
-   <motion.div variants={container} initial="hidden" animate="visible">
-     {letters.map((char, i) => (
-       <motion.span key={i} variants={child} className="text-7xl">
-         {char}
-       </motion.span>
-     ))}
-   </motion.div>
- );
-};
+// import React from "react";
+// import { motion } from "framer-motion";
 
-export default AnimatedTextCharacter;
+// const AnimatedTextCharacter = () => {
+//  const letters = Array.from("Hello World!");
+
+//  const container = {
+//    hidden: { opacity: 0 },
+//    visible: (i = 1) => ({
+//      opacity: 1,
+//      transition: { staggerChildren: 0.03, delayChildren: 0.04 * i },
+//    }),
+//  };
+
+//  const child = {
+//    visible: {
+//      opacity: 1,
+//      x: 0,
+//      y: 0,
+//      transition: {
+//        type: "spring",
+//        damping: 12,
+//        stiffness: 100,
+//      },
+//    },
+//    hidden: {
+//      opacity: 0,
+//      x: -20,
+//      y: 10,
+//      transition: {
+//        type: "spring",
+//        damping: 12,
+//        stiffness: 100,
+//      },
+//    },
+//  };
+
+//  return (
+//    <motion.div variants={container} initial="hidden" animate="visible">
+//      {letters.map((char, i) => (
+//        <motion.span key={i} variants={child} className="text-7xl">
+//          {char}
+//        </motion.span>
+//      ))}
+//    </motion.div>
+//  );
+// };
+
+// export default AnimatedTextCharacter;
 
 // "use client";
 

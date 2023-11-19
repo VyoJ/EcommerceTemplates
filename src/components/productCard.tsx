@@ -1,5 +1,7 @@
-import Image from "next/image";
+"use client";
 
+import { usePathname, useRouter } from "next/navigation";
+import Image from "next/image";
 import {
   Card,
   CardContent,
@@ -10,8 +12,11 @@ import {
 } from "@/components/ui/card";
 import { Button } from "./ui/button";
 import AddToCart from "./addToCart";
-import { useRouter } from "next/navigation";
 import Link from "next/link";
+import { useCallback } from "react";
+import { Trash2 } from "lucide-react";
+import axios from "axios";
+import { useToast } from "./ui/use-toast";
 
 interface ProductProps extends React.HTMLAttributes<HTMLDivElement> {
   id: string;
@@ -34,6 +39,54 @@ function ProductCard({
   rating,
   specs,
 }: ProductProps) {
+  const pathname = usePathname();
+  const isAdminPage = pathname.startsWith("/admin");
+
+  const { toast } = useToast();
+  const router = useRouter();
+
+  const handleDelete = useCallback(() => {
+    console.log("Delete button clicked");
+    const product: ProductProps = {
+      id,
+      prodid,
+      name,
+      img,
+      desc,
+      price,
+      rating,
+      specs,
+    };
+    console.log("Product details:", product);
+    axios
+      .delete(`/api/products/${product.id}`)
+      .then((res) => {
+        const response = res.data;
+        console.log("The response is ", response);
+        if (res.status == 200) {
+          console.log("Product deleted successfully", response);
+          toast({
+            title: "Product deleted successfully!",
+          });
+          router.refresh();
+        }
+        else {
+          console.log("Could not delete");
+          toast({
+            title: "Product deletion failed!",
+            description: "Please try again later",
+          });
+        }
+      })
+      .catch((err) => {
+        console.log("error", err);
+        toast({
+          title: "Product deletion failed!",
+          description: err,
+        });
+      });
+  }, []);
+
   return (
     <>
       <Card className="border m-auto mb-6 border-gray-300 rounded-md shadow-md lg:p-4 lg:mx-4">
@@ -65,7 +118,13 @@ function ProductCard({
       </CardContent> */}
         <CardDescription>{specs}</CardDescription>
         <CardFooter className="flex justify-center">
-          <AddToCart prodid={prodid} name={name} img={img} price={price} />
+          {isAdminPage ? (
+            <Button variant="secondary" onClick={handleDelete} size="icon">
+              <Trash2 color="red" />
+            </Button>
+          ) : (
+            <AddToCart prodid={prodid} name={name} img={img} price={price} />
+          )}
         </CardFooter>
       </Card>
     </>
