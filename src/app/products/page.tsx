@@ -1,54 +1,40 @@
-// "use client"
+"use client";
 
 import ProductCard from "@/components/productCard";
-// import { Sidebar } from "@/components/sidebar";
 import { prod } from "@/@types/product";
 import { Button } from "@/components/ui/button";
-// import { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
+import { Loader2 } from "lucide-react";
 
-async function getProducts() {
-  const axios = require("axios");
-  try {
-    const res = await axios.get("http://localhost:3000/api/products");
-    return res.data;
-  } catch (error) {
-    console.error("Fetch failed:", error);
-    throw error;
-  }
-}
+export default function Products() {
+  const [products, setProducts] = useState<any>([]);
+  const [filter, setFilter] = useState<string>("");
+  const [isLoading, setLoading] = useState(true);
 
-export default async function Products() {
-  // const [filter, setFilter] = useState<string>("");
+  useEffect(() => {
+      fetch("/api/products")
+        .then((res) => res.json())
+        .then((data) => {
+          setProducts(data);
+          setLoading(false);
+        });
+  }, []);
 
-  const products = await getProducts();
-  console.log("products", products);
+  const handleButtonClick = (filterValue: string) => {
+    setFilter(filterValue);
+  };
 
-  // const handleButtonClick = (filterValue: string) => {
-  //   setFilter(filterValue);
-  //   console.log(filter);
-  // };
+  // useEffect(() => {
+  //   console.log(filter)
+  // }, [filter]);
 
+  if (isLoading) return <Loader2 className="h-4 w-4 mr-2 animate-spin" />;
+  if (!products) return <p>No products data found</p>;
 
   return (
     <div className="bg-background grid md:flex mt-8">
       <div className="hidden md:block">
         <div className="pb-12 space-y-4 py-4">
-          {/* <div className="px-3 py-2">
-              <h2 className="mb-2 px-4 text-lg font-semibold tracking-tight">
-                Discover
-              </h2>
-              <div className="space-y-1">
-                <Button variant="secondary" className="w-full justify-start">
-                  Category 1
-                </Button>
-                <Button variant="ghost" className="w-full justify-start">
-                  Category 2
-                </Button>
-                <Button variant="ghost" className="w-full justify-start">
-                  Category 3
-                </Button>
-              </div>
-            </div> */}
           <div className="px-4 py-2">
             <h2 className="mb-4 px-4 text-2xl font-semibold tracking-tight">
               Filters
@@ -57,21 +43,21 @@ export default async function Products() {
               <Button
                 variant="ghost"
                 className="w-full text-lg justify-start"
-                // onClick={() => handleButtonClick("Wearables")}
+                onClick={() => handleButtonClick("Wearables")}
               >
                 Wearables
               </Button>
               <Button
                 variant="ghost"
                 className="w-full text-lg justify-start"
-                // onClick={() => handleButtonClick("Audio")}
+                onClick={() => handleButtonClick("Audio")}
               >
                 Audio
               </Button>
               <Button
                 variant="ghost"
                 className="w-full text-lg justify-start"
-                // onClick={() => handleButtonClick("Computing")}
+                onClick={() => handleButtonClick("Computing")}
               >
                 Computing
               </Button>
@@ -98,3 +84,25 @@ export default async function Products() {
     </div>
   );
 }
+
+// async function getProducts() {
+//   const axios = require("axios");
+//   try {
+//     const res = await axios.get("http://localhost:3000/api/products");
+//     return res.data;
+//   } catch (error) {
+//     console.error("Fetch failed:", error);
+//     throw error;
+//   }
+// }
+
+// export default async function Products() {
+// const [filter, setFilter] = useState<string>("");
+
+// const products = await getProducts();
+// console.log("products", products);
+
+// const handleButtonClick = (filterValue: string) => {
+//   setFilter(filterValue);
+//   console.log(filter);
+// };
