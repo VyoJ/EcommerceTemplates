@@ -1,9 +1,10 @@
-"use client"
+"use client";
 // import { useSession } from "next-auth/react"
 
-import { useEffect, useState } from 'react'
-import { AnimatePresence } from 'framer-motion';
-import PreLoader from '@/components/preLoader';
+import { useEffect, useState } from "react";
+import { AnimatePresence } from "framer-motion";
+import PreLoader from "@/components/preLoader";
+import Image from "next/image";
 
 export default function Home() {
   // const { data: session, status } = useSession()
@@ -11,25 +12,24 @@ export default function Home() {
 
   const [isLoading, setIsLoading] = useState(true);
 
-  useEffect( () => {
-    (
-      async () => {
-          setTimeout( () => {
-            setIsLoading(false);
-            document.body.style.cursor = 'default'
-            window.scrollTo(0,0);
-          }, 2000)
-      }
-    )()
-  }, [])
+  useEffect(() => {
+    (async () => {
+      setTimeout(() => {
+        setIsLoading(false);
+        document.body.style.cursor = "default";
+        window.scrollTo(0, 0);
+      }, 2000);
+    })();
+  }, []);
 
   return (
-    <div>
-      <AnimatePresence mode='wait'>
+    <div className="relative h-screen">
+      <Image src="/bg.jpg" alt="background image" fill className="opacity-20" />
+      <AnimatePresence mode="wait">
         {isLoading && <PreLoader />}
       </AnimatePresence>
     </div>
-  )
+  );
 }
 
 // import React from "react";

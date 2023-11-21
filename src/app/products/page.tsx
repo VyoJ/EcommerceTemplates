@@ -5,6 +5,7 @@ import { prod } from "@/@types/product";
 import { Button } from "@/components/ui/button";
 import { useState, useEffect } from "react";
 import { Loader2 } from "lucide-react";
+import axios from "axios";
 
 export default function Products() {
   const [products, setProducts] = useState<any>([]);
@@ -12,28 +13,32 @@ export default function Products() {
   const [isLoading, setLoading] = useState(true);
 
   useEffect(() => {
-      fetch("/api/products")
-        .then((res) => res.json())
-        .then((data) => {
-          setProducts(data);
-          setLoading(false);
-        });
-  }, []);
+    let url = "/api/products";
+    if (filter) {
+      url += `?filter=${encodeURIComponent(filter)}`;
+    }
+
+    axios
+      .get(url)
+      .then((res) => {
+        setProducts(res.data);
+        setLoading(false);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  }, [filter]);
 
   const handleButtonClick = (filterValue: string) => {
     setFilter(filterValue);
   };
-
-  // useEffect(() => {
-  //   console.log(filter)
-  // }, [filter]);
 
   if (isLoading) return <Loader2 className="h-4 w-4 mr-2 animate-spin" />;
   if (!products) return <p>No products data found</p>;
 
   return (
     <div className="bg-background grid md:flex mt-8">
-      <div className="hidden md:block">
+      <div className="hidden md:block md:w-1/5">
         <div className="pb-12 space-y-4 py-4">
           <div className="px-4 py-2">
             <h2 className="mb-4 px-4 text-2xl font-semibold tracking-tight">
@@ -61,11 +66,18 @@ export default function Products() {
               >
                 Computing
               </Button>
+              <Button
+                variant="ghost"
+                className="w-full text-lg justify-start"
+                onClick={() => handleButtonClick("")}
+              >
+                Reset
+              </Button>
             </div>
           </div>
         </div>
       </div>
-      <div className="md:flex flex-wrap justify-between">
+      <div className="m-4 md:m-0 md:flex flex-wrap justify-evenly">
         {products.data.map((products: prod, index: number) => (
           <div key={index}>
             <ProductCard

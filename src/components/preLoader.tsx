@@ -52,14 +52,15 @@ export default function PreLoader() {
   };
 
   return (
-    <motion.div
-      variants={slideUp}
-      initial="initial"
-      exit="exit"
-    >
+    <motion.div variants={slideUp} initial="initial" exit="exit">
       {dimension.width > 0 && (
         <>
-          <motion.p variants={opacity} initial="initial" animate="enter" className="text-7xl">
+          <motion.p
+            variants={opacity}
+            initial="initial"
+            animate="enter"
+            className="text-7xl text-center"
+          >
             <span></span>
             {words[index]}
           </motion.p>
