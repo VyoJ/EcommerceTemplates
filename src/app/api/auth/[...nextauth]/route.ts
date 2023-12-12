@@ -1,5 +1,6 @@
 import NextAuth from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
+import GoogleProvider from "next-auth/providers/google";
 
 const handler = NextAuth({
   providers: [
@@ -15,32 +16,42 @@ const handler = NextAuth({
 
         const options = {
           headers: { "Content-Type": "application/json" },
-          withCredentials: true
+          withCredentials: true,
         };
         const res = await axios.post(
           "http://localhost:3000/api/auth/login",
           credentials,
           options
         );
-        console.log("res",res)
-        try{
+        console.log("res", res);
+        try {
           const user = await res.data;
-          console.log("user",user)
+          console.log("user", user);
           if (user) return user.data;
+        } catch (err) {
+          console.log("err", err);
+          return null;
         }
-        catch(err){
-         console.log("err",err);
-         return null;
-        }
-        
       },
     }),
+    GoogleProvider({
+      clientId: process.env.GOOGLE_CLIENT_ID as string,
+      clientSecret: process.env.GOOGLE_CLIENT_SECRET as string,
+    }),
   ],
-  session:{
-    strategy:"jwt"
+  session: {
+    strategy: "jwt",
   },
   pages: {
     signIn: "/login",
+  },
+  callbacks: {
+    async signIn({ account, profile }) {
+      if (account?.provider === "google") {
+        console.log(account, profile);
+      }
+      return true // Do different verification for other providers that don't have `email_verified`
+    },
   },
   secret: process.env.NEXTAUTH_SECRET,
 });

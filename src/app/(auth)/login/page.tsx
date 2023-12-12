@@ -10,6 +10,8 @@ import { Label } from "@/components/ui/label";
 import { Loader2 } from "lucide-react";
 import { LoginErrorType } from "@/@types/globalTypes";
 import { useToast } from "@/components/ui/use-toast";
+import Image from "next/image";
+import GoogleIcon from "../../../../public/google.svg";
 
 export default function LogInPage() {
   const [authState, setAuthState] = useState({
@@ -32,24 +34,23 @@ export default function LogInPage() {
         if (response.status == 200) {
           console.log("The user signed in", response);
           if (response.data.email === "admin@admin.com") {
-          signIn("credentials", {
-            email: response.data.email,
-            password: response.data.password,
-            callbackUrl: "/admin",
-            redirect: true,
-          })
-            .then((res) => {
-              toast({
-                title: "Logged in successfully!",
-                description: "Redirecting to admin dashboard...",
-              });
-              console.log("success", res);
+            signIn("credentials", {
+              email: response.data.email,
+              password: response.data.password,
+              callbackUrl: "/admin",
+              redirect: true,
             })
-            .catch((err) => {
-              console.log("error", err);
-            });
-          }
-          else {
+              .then((res) => {
+                toast({
+                  title: "Logged in successfully!",
+                  description: "Redirecting to admin dashboard...",
+                });
+                console.log("success", res);
+              })
+              .catch((err) => {
+                console.log("error", err);
+              });
+          } else {
             signIn("credentials", {
               email: response.data.email,
               password: response.data.password,
@@ -143,6 +144,35 @@ export default function LogInPage() {
                 </Button>
               </div>
             </form>
+            <div className="relative">
+              <div className="absolute inset-0 flex items-center">
+                <span className="w-full border-t" />
+              </div>
+              <div className="relative flex justify-center text-xs uppercase">
+                <span className="bg-background px-2 text-muted-foreground">
+                  Or continue with
+                </span>
+              </div>
+            </div>
+            <Button
+              variant="outline"
+              type="button"
+              disabled={loading}
+              onClick={() =>
+                signIn("google", {
+                  callbackUrl: "/",
+                  redirect: true,
+                })
+              }
+            >
+              {loading ? (
+                <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+              ) : (
+                <Image src={GoogleIcon} className="mr-2" alt="Google" width={28} />
+              )}
+              {"  "}
+              Google
+            </Button>
           </div>
           <Link href="/signup" className="text-center">
             Don't have an account? Click to create one!

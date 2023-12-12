@@ -1,5 +1,6 @@
 "use client";
 
+import React from "react";
 import ProductCard from "@/components/productCard";
 import { prod } from "@/@types/product";
 import { Button } from "@/components/ui/button";
@@ -8,9 +9,8 @@ import { Loader2 } from "lucide-react";
 import axios from "axios";
 
 export default function Products() {
-  const [products, setProducts] = useState<any>([]);
+  const [products, setProducts] = useState<any>({ data: [] });
   const [filter, setFilter] = useState<string>("");
-  const [isLoading, setLoading] = useState(true);
 
   useEffect(() => {
     let url = "/api/products";
@@ -22,7 +22,6 @@ export default function Products() {
       .get(url)
       .then((res) => {
         setProducts(res.data);
-        setLoading(false);
       })
       .catch((error) => {
         console.error(error);
@@ -33,7 +32,6 @@ export default function Products() {
     setFilter(filterValue);
   };
 
-  if (isLoading) return <Loader2 className="h-4 w-4 mr-2 animate-spin" />;
   if (!products) return <p>No products data found</p>;
 
   return (

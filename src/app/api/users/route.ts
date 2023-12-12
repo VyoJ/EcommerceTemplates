@@ -1,40 +1,23 @@
-// import { NextResponse } from "next/server";
-// import connectDB from "@/lib/db";
-// import UserModel from "@/models/user";
-// import bcrypt from "bcryptjs";
+import { NextRequest, NextResponse } from "next/server";
+import connectDB from "@/lib/db";
+import UserModel from "@/models/user";
 
-// export const GET = async (
-//   request: NextResponse,
-//   { params }: { params: { username: String; password: String } }
-// ) => {
-//   try {
-//     await connectDB();
+export const GET = async (request: NextRequest) => {
+  try {
+    await connectDB();
 
-//     console.log(`Details: `, params);
-
-//     const users = await UserModel.find({
-//       name: params.username,
-//       password: params.password,
-//     });
-//     console.log(users);
-
-//     return new NextResponse(JSON.stringify({ data: users }), { status: 200 });
-//   } catch (err) {
-//     return new NextResponse("Database Error", { status: 500 });
-//   }
-// };
-
-// export const POST = async (request: NextResponse) => {
-//   const body = await request.json();
-//   const newUser = new UserModel(body);
-
-//   try {
-//     await connectDB();
-
-//     await newUser.save();
-
-//     return new NextResponse("User has been created", { status: 201 });
-//   } catch (err) {
-//     return new NextResponse("Database Error", { status: 500 });
-//   }
-// };
+    const queryParam = request.nextUrl.searchParams.get("email");
+    const users = await UserModel.find({ email: queryParam });
+    if (users.length !== 0) {
+      return new NextResponse(JSON.stringify({ data: users }), {
+        status: 202,
+      });
+    } else {
+      return new NextResponse("None found", {
+        status: 200,
+      });
+    }
+  } catch (err) {
+    return new NextResponse("Some Error", { status: 500 });
+  }
+};

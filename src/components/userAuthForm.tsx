@@ -42,16 +42,10 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
             <Label className="sr-only" htmlFor="password">
               Password
             </Label>
-            <Input
-              id="password"
-              type="password"
-              disabled={isLoading}
-            />
+            <Input id="password" type="password" disabled={isLoading} />
           </div>
           <Button disabled={isLoading} onClick={onSubmit}>
-            {isLoading && (
-              <Loader2 className="h-4 w-4 mr-2 animate-spin"/>
-            )}
+            {isLoading && <Loader2 className="h-4 w-4 mr-2 animate-spin" />}
             Sign In with Email
           </Button>
         </div>
