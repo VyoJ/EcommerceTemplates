@@ -9,11 +9,7 @@ export const cartReducer = (state: CartState, action: CartAction) => {
       const existingItem = state.items.find(
         (item: Item) => item.prodid === action.payload.prodid
       );
-
-      // console.log("existing",existingItem);
-
       if (existingItem) {
-        // console.log("exist")
         return {
           ...state,
           items: state.items.map((item: Item) =>
@@ -23,7 +19,6 @@ export const cartReducer = (state: CartState, action: CartAction) => {
           ),
         };
       } else {
-        // console.log("not exist");
         return {
           ...state,
           items: [...state.items, { ...action.payload, quantity: 1 }],

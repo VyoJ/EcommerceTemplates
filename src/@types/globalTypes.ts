@@ -32,36 +32,3 @@ export type CartAction = {
   type: string;
   payload: any;
 };
-
-// export type cartStateType = {
-//   products: prod[];
-// };
-
-// export type ProductActions = ActionMap<ProductPayload>[keyof ActionMap<ProductPayload>];
-
-// export interface ActionInterface {
-//   type: string;
-//   payload: unknown;
-// }
-
-// export type ActionMap<M extends { [index: string]: any }> = {
-//   [Key in keyof M]: M[Key] extends undefined ? { type: Key;} : {
-//         type: Key;
-//         payload: M[Key];
-//       };
-// };
-
-// export enum Operations {
-//   Create = "CREATE_PRODUCT",
-//   Delete = "DELETE_PRODUCT",
-//   Add = "ADD_PRODUCT",
-// }
-
-// export type ProductPayload = {
-//   [Operations.Create]: prod;
-//   [Operations.Delete]: { id: string };
-// };
-
-// export type ShoppingCartPayload = {
-//   [Operations.Add]: undefined;
-// };

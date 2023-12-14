@@ -94,25 +94,3 @@ export default function Products() {
     </div>
   );
 }
-
-// async function getProducts() {
-//   const axios = require("axios");
-//   try {
-//     const res = await axios.get("http://localhost:3000/api/products");
-//     return res.data;
-//   } catch (error) {
-//     console.error("Fetch failed:", error);
-//     throw error;
-//   }
-// }
-
-// export default async function Products() {
-// const [filter, setFilter] = useState<string>("");
-
-// const products = await getProducts();
-// console.log("products", products);
-
-// const handleButtonClick = (filterValue: string) => {
-//   setFilter(filterValue);
-//   console.log(filter);
-// };
